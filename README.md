@@ -1,3 +1,3 @@
 # DIP
 
-> From Scratch Implementation of Some Basic Algorithms for Digital Image Processing in Python.
+> Implementation of Basic Algorithms of Digital Image Processing mainly through Numpy.
