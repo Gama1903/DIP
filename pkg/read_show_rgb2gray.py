@@ -22,7 +22,7 @@ def imread_m(path: str) -> np.ndarray:
 
 
 def imshow_m(imgs: tuple,
-             title: list,
+             titles: list,
              cmaps: list,
              row: int = 1,
              col: int = 1):
@@ -30,8 +30,8 @@ def imshow_m(imgs: tuple,
 
     Args:
         imgs (tuple): 图片元组
-        title (list): 图片名称列表
-        cmaps (list): 颜色图谱列表，"gray"显示灰度图；"hsv"显示目前颜色空间图像，默认为RGB颜色空间
+        titles (list): 图片名称列表
+        cmaps (list): 颜色图谱列表. "gray"显示灰度图; "hsv"显示目前颜色空间图像, 默认为RGB颜色空间. 更多标志见官方文档
         row (int, optional): 子图行数. Defaults to 1.
         col (int, optional): 子图列数. Defaults to 1.
     """
@@ -48,14 +48,14 @@ def imshow_m(imgs: tuple,
         plt.rcParams['font.sans-serif'] = ['KaiTi']
         for i, img in enumerate(imgs):
             plt.subplot(row, col, i + 1)
-            plt.title(title[i])
+            plt.title(titles[i])
             plt.axis("off")
             plt.imshow(img, cmap=cmaps[i])
 
         plt.show()
 
-    except ValueError:
-        print("ValueError:'len(imgs) must be equal to len(cmaps)'")
+    except IndexError:
+        print("Error:'len(imgs) must be equal to len(titles) and len(cmaps)'")
 
 
 def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
