@@ -55,7 +55,8 @@ def imshow_m(imgs: tuple,
         plt.show()
 
     except IndexError:
-        print("Error:'len(imgs) must be equal to len(titles) and len(cmaps)'")
+        print(
+            "IndexError:len(imgs) must be equal to len(titles) and len(cmaps)")
 
 
 def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
