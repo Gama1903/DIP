@@ -1,3 +1,4 @@
+import cv2 as cv
 import numpy as np
 
 
@@ -28,9 +29,23 @@ def meanFilt_m(input_image, size_kernal):
     # ¿Õ¼äÂË²¨
     for i in range(num_pad, m - num_pad):
         for j in range(num_pad, n - num_pad):
-            output_image[i, j] = np.sum(kernal*input_image_cp[i - num_pad:i + num_pad + 1,
+            output_image[i, j] = np.sum(
+                kernal *
+                input_image_cp[i - num_pad:i + num_pad + 1,
                                j - num_pad:j + num_pad + 1]) / (size_kernal**2)
 
     output_image = output_image[num_pad:m - num_pad, num_pad:n - num_pad]  # ²Ã¼ô
 
     return output_image
+
+
+def main():
+    size_kernal = 11
+    src = cv.cvtColor(
+        cv.imread(cv.samples.findFile("Images\\blurring_orig.tif")),
+        cv.COLOR_BGR2GRAY)
+    dst = meanFilt_m(src, size_kernal)
+
+    cv.imshow("Original Image", src)
+    cv.imshow("Filtered Image", dst)
+    cv.waitKey()
