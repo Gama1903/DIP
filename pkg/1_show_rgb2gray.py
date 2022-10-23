@@ -71,14 +71,14 @@ def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
 
 def main():
     # 测试程序
-    img_rgb = iio.imread("repo\images\coloredChips_rgb_orig.png")
+    img_rgb = iio.imread("images\coloredChips_rgb_orig.png")
     img_gray = rgb2gray_m(img_rgb)
     imshow_m((img_rgb, img_gray), ("RGB Image", "Gray-scale Image"),
              ("hsv", "gray"), 1, 2)
 
     # # opencv等效程序
-    # img_rgb = cv.imread("repo\images\coloredChips_rgb_orig.png")
-    # img_gray = cv.imread("repo\images\coloredChips_rgb_orig.png", flags=0)
+    # img_rgb = cv.imread("images\coloredChips_rgb_orig.png")
+    # img_gray = cv.imread("images\coloredChips_rgb_orig.png", flags=0)
     # cv.imshow("RGB Image", img_rgb)
     # cv.imshow("Gray-scale Image", img_gray)
     # cv.waitKey()
