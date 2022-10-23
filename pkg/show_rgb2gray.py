@@ -1,24 +1,12 @@
+import cv2 as cv
 import numpy as np
-import imageio.v2 as imageio
+import imageio.v3 as iio
 import matplotlib.pyplot as plt
 
 __all__ = [
-    "imread_m",
     "imshow_m",
     "rgb2gray_m",
 ]
-
-
-def imread_m(path: str) -> np.ndarray:
-    """通过imageio.imread()读入图片并转为np.ndarray
-
-        Args:
-            path (str): 源图片所在位置
-
-        Returns:
-            np.ndarray: 输出np.ndarray
-        """
-    return np.array(imageio.imread(path))
 
 
 def imshow_m(imgs: tuple,
@@ -26,7 +14,7 @@ def imshow_m(imgs: tuple,
              cmaps: list,
              row: int = 1,
              col: int = 1):
-    """利用matplotlib.pyplot展示图片
+    """利用matplotlib.pyplot展示一个或多个图片
 
     Args:
         imgs (tuple): 图片元组
@@ -81,12 +69,20 @@ def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
     return OutputImg
 
 
-# 测试程序
 def main():
-    img1 = imread_m("repo\images\coloredChips_rgb_orig.png")
-    img2 = rgb2gray_m(img1)
-    imshow_m((img1, img2), ("coloredChips_rgb", "coloredChips_gray"),
+    # 测试程序
+    img_rgb = iio.imread("repo\images\coloredChips_rgb_orig.png")
+    img_gray = rgb2gray_m(img_rgb)
+    imshow_m((img_rgb, img_gray), ("RGB Image", "Gray-scale Image"),
              ("hsv", "gray"), 1, 2)
+
+    # # opencv等效程序
+    # img_rgb = cv.imread("repo\images\coloredChips_rgb_orig.png")
+    # img_gray = cv.imread("repo\images\coloredChips_rgb_orig.png", flags=0)
+    # cv.imshow("RGB Image", img_rgb)
+    # cv.imshow("Gray-scale Image", img_gray)
+    # cv.waitKey()
+    # cv.destroyWindow()
 
 
 if __name__ == "__main__":
