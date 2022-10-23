@@ -1,8 +1,9 @@
-import numpy as np
 import cv2 as cv
+import numpy as np
+import imageio.v3 as iio
 from typing import Callable
 
-from repo.pkg.read_show_rgb2gray import imread_m, imshow_m
+from repo.pkg.A_show_rgb2gray import imshow_m
 
 __all__ = [
     "dec_pooling",
@@ -85,16 +86,20 @@ def pooling(InputMat: np.ndarray,
     return OutputMat.astype("uint8")
 
 
-# 测试程序
 def main():
-    img_orig = imread_m("repo\images\cameraman_orig.tif")
-    print(img_orig.shape)
-    img_pooled = pooling(img_orig, 11, 11)
+    # 测试程序
+    img_orig = iio.imread("images\cameraman_orig.tif")
+    img_pooled = pooling(img_orig, 3, 3)
     imshow_m((img_orig, img_pooled), ("Original Image", "Pooled Image"),
              ("gray", "gray"), 1, 2)
+
+    # # opencv等效程序
+    # img_orig = cv.imread("images\cameraman_orig.tif", flags=0)
+    # img_pooled = pooling(img_orig, 3, 3)
     # cv.imshow("Original Image", img_orig)
     # cv.imshow("Pooled Image", img_pooled)
     # cv.waitKey()
+    # cv.destroyWindow()
 
 
 if __name__ == "__main__":
