@@ -12,21 +12,21 @@ def meanFilt_m(input_image, size_kernal):
     Returns:
         output_image (OutputArray): Filtered Image
     """
-    input_image_cp = np.copy(input_image)  # Ô­Í¼¸±±¾
+    input_image_cp = np.copy(input_image)  # åŸå›¾å‰¯æœ¬
 
-    kernal = np.ones((size_kernal, size_kernal))  # ³õÊ¼»¯ºË
+    kernal = np.ones((size_kernal, size_kernal))  # åˆå§‹åŒ–æ ¸
 
-    num_pad = int((size_kernal - 1) / 2)  # ĞèÌî³äµÄ³ß´ç
+    num_pad = int((size_kernal - 1) / 2)  # éœ€å¡«å……çš„å°ºå¯¸
 
     input_image_cp = np.pad(input_image_cp, (num_pad, num_pad),
                             mode="constant",
-                            constant_values=0)  # Ìî³äÊäÈëÍ¼Ïñ
+                            constant_values=0)  # å¡«å……è¾“å…¥å›¾åƒ
 
-    m, n = input_image_cp.shape  # Ìî³äºóÍ¼Ïñ³ß´ç
+    m, n = input_image_cp.shape  # å¡«å……åå›¾åƒå°ºå¯¸
 
-    output_image = np.copy(input_image_cp)  # Êä³öÍ¼Ïñ
+    output_image = np.copy(input_image_cp)  # è¾“å‡ºå›¾åƒ
 
-    # ¿Õ¼äÂË²¨
+    # ç©ºé—´æ»¤æ³¢
     for i in range(num_pad, m - num_pad):
         for j in range(num_pad, n - num_pad):
             output_image[i, j] = np.sum(
@@ -34,7 +34,7 @@ def meanFilt_m(input_image, size_kernal):
                 input_image_cp[i - num_pad:i + num_pad + 1,
                                j - num_pad:j + num_pad + 1]) / (size_kernal**2)
 
-    output_image = output_image[num_pad:m - num_pad, num_pad:n - num_pad]  # ²Ã¼ô
+    output_image = output_image[num_pad:m - num_pad, num_pad:n - num_pad]  # è£å‰ª
 
     return output_image
 
