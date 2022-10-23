@@ -6,4 +6,5 @@
 
 ## Reference
 
-> https://github.com/xiaohuiduan/image_process > https://github.com/merveenoyan/Digital_Image_Processing_Python
+> https://github.com/xiaohuiduan/image_process
+> https://github.com/merveenoyan/Digital_Image_Processing_Python
