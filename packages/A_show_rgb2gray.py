@@ -13,7 +13,8 @@ def imshow_m(imgs: tuple,
              titles: list,
              cmaps: list,
              row: int = 1,
-             col: int = 1):
+             col: int = 1,
+             axis: bool = False):
     """利用matplotlib.pyplot展示一个或多个图片
 
     Args:
@@ -24,6 +25,7 @@ def imshow_m(imgs: tuple,
         col (int, optional): 子图列数. Defaults to 1.
     """
     try:
+        # 确定子图的行列排布
         if row == 0 and col != 0:
             row = np.ceil(len(imgs) / col).astyle("uint8")
         elif row != 0 and col == 0:
@@ -33,13 +35,14 @@ def imshow_m(imgs: tuple,
             row = np.ceil(np.sqrt(len(imgs))).astype("uint8")
             col = np.ceil(len(imgs) / row).astyle("uint8")
 
+        # 设置子图并展示
         plt.rcParams['font.sans-serif'] = ['KaiTi']
         for i, img in enumerate(imgs):
             plt.subplot(row, col, i + 1)
             plt.title(titles[i])
-            plt.axis("off")
+            if axis == False:
+                plt.axis("off")
             plt.imshow(img, cmap=cmaps[i])
-
         plt.show()
 
     except IndexError:

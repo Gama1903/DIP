@@ -1,5 +1,17 @@
+from email.mime import image
 import cv2 as cv
 import numpy as np
+
+
+def pad_m(img: np.ndarray, pad_width: list, mode: str = "zero") -> np.ndarray:
+    OutputImg = np.zeros(
+        (img.shape[0] + pad_width[0] * 2, img.shape[1] + pad_width[1] * 2))
+    OutputImg[pad_width[0]:pad_width[0] + img.shape[0],
+              pad_width[1]:pad_width[1] + img.shape[1]] = img
+    if mode == "zero":
+        return OutputImg
+
+
 
 
 def meanFilt_m(input_image, size_kernal):
@@ -18,9 +30,7 @@ def meanFilt_m(input_image, size_kernal):
 
     num_pad = int((size_kernal - 1) / 2)  # 需填充的尺寸
 
-    input_image_cp = np.pad(input_image_cp, (num_pad, num_pad),
-                            mode="constant",
-                            constant_values=0)  # 填充输入图像
+    input_image_cp = pad_m(input_image, (size_kernal, size_kernal))  # 填充输入图像
 
     m, n = input_image_cp.shape  # 填充后图像尺寸
 
