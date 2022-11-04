@@ -1,9 +1,7 @@
-import cv2 as cv
 import numpy as np
 import imageio.v3 as iio
+import matplotlib.pyplot as plt
 from typing import Callable
-
-from repo.packages.A_show_rgb2gray import imshow_m
 
 __all__ = [
     "dec_pooling",
@@ -83,20 +81,30 @@ def pooling(InputMat: np.ndarray,
     return OutputMat.astype("uint8")
 
 
+# 测试程序
 def main():
-    # 测试程序
-    img_orig = iio.imread("images\cameraman_orig.tif")
-    img_pooled = pooling(img_orig, 3)
-    imshow_m((img_orig, img_pooled), ("Original Image", "Pooled Image"),
-             ("gray", "gray"), 1, 2, True)
+    flag_test = 0
 
-    # # opencv等效程序
-    # img_orig = cv.imread("images\cameraman_orig.tif", flags=0)
-    # img_pooled = pooling(img_orig, 3)
-    # cv.imshow("Original Image", img_orig)
-    # cv.imshow("Pooled Image", img_pooled)
-    # cv.waitKey()
-    # cv.destroyWindow()
+    ax1 = plt.subplot(121)
+    img_orig = iio.imread("images\cameraman_orig.tif")
+    ax1.set_title("Original Image")
+    ax1.set_ylim(img_orig.shape[0], 0)
+    ax1.set_xlim(0, img_orig.shape[1])
+    ax1.set_axis_off()
+    plt.imshow(img_orig, cmap="gray")
+
+    ax2 = plt.subplot(122, sharex=ax1, sharey=ax1)
+    # 展示Maxpooling
+    if flag_test == 0:
+        img_pooled = pooling(img_orig, 3)
+        ax2.set_title("Maxpooled Image")
+    # 展示Averagepooling
+    elif flag_test == 1:
+        img_pooled = pooling(img_orig, 3)
+        ax2.set_title("Maxpooled Image")
+    ax2.set_axis_off()
+    plt.imshow(img_pooled, cmap="gray")
+    plt.show()
 
 
 if __name__ == "__main__":
