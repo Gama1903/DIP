@@ -23,8 +23,11 @@ def imshow_m(imgs: tuple,
         cmaps (list): 颜色图谱列表. "gray"显示灰度图; "hsv"显示目前颜色空间图像, 默认为RGB颜色空间. 更多标志见官方文档
         row (int, optional): 子图行数. Defaults to 1.
         col (int, optional): 子图列数. Defaults to 1.
+        axis (bool, optional): 控制轴的显示. Defaults to False.
     """
-    try:
+    if len(imgs) != len(titles) or len(imgs) != len(cmaps):
+        print("len(imgs) must be equal to len(titles) and len(cmaps)")
+    else:
         # 确定子图的行列排布
         if row == 0 and col != 0:
             row = np.ceil(len(imgs) / col).astyle("uint8")
@@ -36,7 +39,7 @@ def imshow_m(imgs: tuple,
             col = np.ceil(len(imgs) / row).astyle("uint8")
 
         # 设置子图并展示
-        plt.rcParams['font.sans-serif'] = ['KaiTi']
+        # plt.rcParams['font.sans-serif'] = ['KaiTi']
         for i, img in enumerate(imgs):
             plt.subplot(row, col, i + 1)
             plt.title(titles[i])
@@ -44,10 +47,6 @@ def imshow_m(imgs: tuple,
                 plt.axis("off")
             plt.imshow(img, cmap=cmaps[i])
         plt.show()
-
-    except IndexError:
-        print(
-            "IndexError:len(imgs) must be equal to len(titles) and len(cmaps)")
 
 
 def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
@@ -72,20 +71,23 @@ def rgb2gray_m(InputImg: np.ndarray, method: str = "NTSC") -> np.ndarray:
     return OutputImg
 
 
+# 测试程序
 def main():
-    # 测试程序
-    img_rgb = iio.imread("images\coloredChips_rgb_orig.png")
-    img_gray = rgb2gray_m(img_rgb)
-    imshow_m((img_rgb, img_gray), ("RGB Image", "Gray-scale Image"),
-             ("hsv", "gray"), 1, 2)
-
-    # # opencv等效程序
-    # img_rgb = cv.imread("images\coloredChips_rgb_orig.png")
-    # img_gray = cv.imread("images\coloredChips_rgb_orig.png", flags=0)
-    # cv.imshow("RGB Image", img_rgb)
-    # cv.imshow("Gray-scale Image", img_gray)
-    # cv.waitKey()
-    # cv.destroyWindow()
+    flag_test = 0
+    # 主测试程序
+    if flag_test == 0:
+        img_rgb = iio.imread("images\coloredChips_rgb_orig.png")
+        img_gray = rgb2gray_m(img_rgb)
+        imshow_m((img_rgb, img_gray), ("RGB Image", "Gray-scale Image"),
+                 ("hsv", "gray"), 1, 2)
+    # opencv等效程序
+    elif flag_test == 1:
+        img_rgb = cv.imread("images\coloredChips_rgb_orig.png")
+        img_gray = cv.imread("images\coloredChips_rgb_orig.png", flags=0)
+        cv.imshow("RGB Image", img_rgb)
+        cv.imshow("Gray-scale Image", img_gray)
+        cv.waitKey()
+        cv.destroyWindow()
 
 
 if __name__ == "__main__":
