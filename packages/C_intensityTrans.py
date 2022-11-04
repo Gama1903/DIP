@@ -1,6 +1,7 @@
-from re import I
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
+from A_show_rgb2gray import imshow_m
 
 __all__ = [
     "getNegative",
@@ -54,33 +55,31 @@ def gammaTrans(img: np.ndarray, gamma: float, c: int = 1) -> np.ndarray:
     return (c * maxVal * np.divide(img, maxVal)**gamma).astype("uint8")
 
 
+# 测试程序
 def main():
     flag_test = 2
-    # getNegative()的测试程序
+    # getNegative()
     if flag_test == 0:
         img_orig = cv.imread("images\\breast_digital_Xray.tif", flags=0)
-        img_negative = getNegative(img_orig)
-        cv.imshow("Original Image", img_orig)
-        cv.imshow("Image Negative", img_negative)
-    # logtrans()测试程序
+        img_processed = getNegative(img_orig)
+        imshow_m((img_orig, img_processed),
+                 ("Original Image", "Image Negative"), ("gray", "gray"), 1, 2)
+    # logTrans()
     elif flag_test == 1:
         img_orig = cv.imread("images\\lena_rgb_orig.png", flags=0)
         img_processed = logTrans(img_orig)
-        cv.imshow("Original Image", img_orig)
-        cv.imshow("processed Image", img_processed)
-    # gammatrans()的测试程序
+        imshow_m((img_orig, img_processed),
+                 ("Original Image", "Processed Image"), ("gray", "gray"), 1, 2)
+    # gammaTrans()
     elif flag_test == 2:
         img_orig_1 = cv.imread("images\\fractured_spine.tif", flags=0)
         img_orig_2 = cv.imread("images\\washed_out_aerial_image.tif", flags=0)
         img_processed_1 = gammaTrans(img_orig_1, 0.3)
         img_processed_2 = gammaTrans(img_orig_2, 4)
-        cv.imshow("Original Image 1", img_orig_1)
-        cv.imshow("Processed Image 1", img_processed_1)
-        cv.imshow("Original Image 2", img_orig_2)
-        cv.imshow("Processed Image 2", img_processed_2)
-
-    cv.waitKey()
-    cv.destroyWindow()
+        plt.figure(constrained_layout=True)
+        imshow_m((img_orig_1, img_processed_1, img_orig_2, img_processed_2),
+                 ("Original Image 1", "Processed Image 1", "Original Image 2",
+                  "Processed Image 2"), ("gray", "gray", "gray", "gray"), 2, 2)
 
 
 if __name__ == "__main__":
