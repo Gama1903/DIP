@@ -94,11 +94,11 @@ def main():
     plt.imshow(img_orig, cmap="gray")
 
     ax2 = plt.subplot(122, sharex=ax1, sharey=ax1)
-    # 展示Maxpooling
+    # Maxpooling
     if flag_test == 0:
         img_pooled = pooling(img_orig, 3)
         ax2.set_title("Maxpooled Image")
-    # 展示Averagepooling
+    # Averagepooling
     elif flag_test == 1:
         img_pooled = pooling(img_orig, 3)
         ax2.set_title("Maxpooled Image")
