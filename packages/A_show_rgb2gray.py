@@ -26,7 +26,7 @@ def imshow_m(imgs: tuple,
         axis (bool, optional): 控制轴的显示. Defaults to False.
     """
     if len(imgs) != len(titles) or len(imgs) != len(cmaps):
-        print("len(imgs) must be equal to len(titles) and len(cmaps)")
+        print("Error: len(imgs) must be equal to len(titles) and len(cmaps)")
     else:
         # 确定子图的行列排布
         if row == 0 and col != 0:
