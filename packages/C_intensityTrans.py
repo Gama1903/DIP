@@ -34,9 +34,9 @@ def logTrans(img: np.ndarray, c: int = 1) -> np.ndarray:
     Returns:
         np.ndarray: 输出图像
     """
-    maxVal = np.max(img)
 
-    return (c * maxVal * np.log(1 + np.divide(img, maxVal))).astype("uint8")
+    return cv.normalize(c * np.log(1 + img), None, 0, 255,
+                        cv.NORM_MINMAX).astype("uint8")
 
 
 def gammaTrans(img: np.ndarray, gamma: float, c: int = 1) -> np.ndarray:
