@@ -1,51 +1,58 @@
 import cv2 as cv
 import numpy as np
+from A_show_rgb2gray import imshow_m
+
+__all__ = [
+    "equalizeHist_m",
+]
 
 
-def equalizeHist_m(input_image):
-    """equalizeHist() of me
+def equalizeHist_m(InputImg: np.ndarray) -> np.ndarray:
+    """直方图均衡化
 
     Args:
-        input_image (InputArray): original image
+        InputImg (np.ndarray): 输入图像
 
     Returns:
-        output_image (OutputArray): equalized image
+        np.ndarray: 输出图像
     """
-    output_image = np.copy(input_image)  # 均衡化后的图像，初始化为原图
-
-    input_image_cp = np.copy(input_image)  # 原图的副本
-
-    m, n = input_image_cp.shape  # 原图的尺寸
-
-    pixels_total_num = m * n  # 原图的像素总数
-
-    P_input_image_grayscale = []  # 原图各灰度级概率，即原图直方图
-
-    # 求原图直方图
+    # 输出图像初始化
+    OutputImg = np.copy(InputImg)
+    # 原图的副本
+    InputImg_cp = np.copy(InputImg)
+    # 原图的尺寸
+    row, col = InputImg_cp.shape
+    # 原图的像素总数
+    num_pixel = row * col
+    # 概率密度函数, probability density function
+    pdf = []
     for i in range(256):
-        P_input_image_grayscale.append(
-            np.sum(input_image_cp == i) / pixels_total_num)
-
-    # 求解输出图像
-    F = 0  # 原图的灰度级概率分布函数
+        pdf.append(np.sum(InputImg_cp == i) / num_pixel)
+    # 累积分布函数, cumulation distribution function
+    cdf = 0
     for i in range(256):
-        F = F + P_input_image_grayscale[i]
-        output_image[np.where(input_image_cp == i)] = 255 * F
+        cdf = cdf + pdf[i]
+        # 求解输出图像
+        OutputImg[np.where(InputImg_cp == i)] = 255 * cdf
+    return OutputImg
 
-    return output_image
 
-
+# 测试程序
 def main():
-    src = cv.cvtColor(
-        cv.imread(cv.samples.findFile("Images\equalizeHist_orig.tif")),
-        cv.COLOR_BGR2GRAY)
+    flag_test = 1
 
-    dst = equalizeHist_m(src)
-
-    cv.imshow("Original Image", src)
-    cv.imshow("Equalized Image", dst)
-    cv.waitKey()
-    cv.destroyWindow()
+    # 主测试程序
+    if flag_test == 0:
+        img_orig = cv.imread("images\washed_out_aerial_image.tif", flags=0)
+        img_processed = equalizeHist_m(img_orig)
+        imshow_m((img_orig, img_processed),
+                 ("Original Image", "Processed Image"), ("gray", "gray"), 1, 2)
+    # opencv等效程序
+    elif flag_test == 1:
+        img_orig = cv.imread("images\washed_out_aerial_image.tif", flags=0)
+        img_processed = cv.equalizeHist(img_orig)
+        imshow_m((img_orig, img_processed),
+                 ("Original Image", "Processed Image"), ("gray", "gray"), 1, 2)
 
 
 if __name__ == "__main__":
