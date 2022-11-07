@@ -17,6 +17,8 @@ average_m = lambda arr: int(np.average(arr))
 def dec_pooling(pooling: Callable):
     """pooling函数的装饰器
 
+    Args:
+        pooling (Callable): pooling函数
     """
     def wrapper_func(InputMat: np.ndarray,
                      size: int,
