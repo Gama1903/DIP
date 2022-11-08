@@ -1,6 +1,9 @@
-from email.mime import image
 import cv2 as cv
 import numpy as np
+
+__all__ = [
+    "pad_m",
+]
 
 
 def pad_m(img: np.ndarray, pad_width: list, mode: str = "zero") -> np.ndarray:
@@ -10,8 +13,6 @@ def pad_m(img: np.ndarray, pad_width: list, mode: str = "zero") -> np.ndarray:
               pad_width[1]:pad_width[1] + img.shape[1]] = img
     if mode == "zero":
         return OutputImg
-
-
 
 
 def meanFilt_m(input_image, size_kernal):
@@ -59,3 +60,7 @@ def main():
     cv.imshow("Original Image", src)
     cv.imshow("Filtered Image", dst)
     cv.waitKey()
+
+
+if __name__ == "__main__":
+    main()
