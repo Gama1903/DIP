@@ -25,15 +25,15 @@ def equalizeHist_m(InputImg: np.ndarray) -> np.ndarray:
     # 原图的像素总数
     num_pixel = row * col
     # 概率密度函数, probability density function
-    pdf = []
+    PDF = []
     for i in range(256):
-        pdf.append(np.sum(InputImg_cp == i) / num_pixel)
+        PDF.append(np.sum(InputImg_cp == i) / num_pixel)
     # 累积分布函数, cumulation distribution function
-    cdf = 0
+    CDF = 0
     for i in range(256):
-        cdf = cdf + pdf[i]
+        CDF = CDF + PDF[i]
         # 求解输出图像
-        OutputImg[np.where(InputImg_cp == i)] = 255 * cdf
+        OutputImg[np.where(InputImg_cp == i)] = 255 * CDF
     return OutputImg
 
 
