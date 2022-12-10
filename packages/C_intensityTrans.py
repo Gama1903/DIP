@@ -57,7 +57,7 @@ def gammaTrans(img: np.ndarray, gamma: float, c: int = 1) -> np.ndarray:
 
 # 测试程序
 def main():
-    flag_test = 2
+    flag_test = 1
     # getNegative()
     if flag_test == 0:
         img_orig = cv.imread("images\\breast_digital_Xray.tif", flags=0)
